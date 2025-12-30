@@ -15,3 +15,13 @@ build/
 htmlcov/
 *.log
 .DS_Store
+
+# Test results
+test-results.xml
+coverage.xml
+
+# Jenkins
+.jenkins/
+
+# Docker
+*.dockerignore
