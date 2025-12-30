@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.13-slim'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
+        }
+    }
     
     environment {
         DOCKER_IMAGE = 'flask-task-app'
@@ -20,6 +25,10 @@ pipeline {
             steps {
                 echo 'Setting up Python virtual environment...'
                 sh '''
+                    # Install Docker CLI in the Python container
+                    apt-get update && apt-get install -y docker.io curl
+                    
+                    # Setup Python environment
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
